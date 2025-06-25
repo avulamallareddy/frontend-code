@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppnis',sans-serif;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #2f363e;
+}
+#clock
+{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    height: 220px;
+    width: 550px;
+    border: none;
+    border-radius: 5px;
+}
+#secDots,
+#minDots,
+#hrDots
+{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+#secDots::before,
+#minDots::before,
+#hrDots::before
+{
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    inset: -20px;
+    box-shadow: 25px 25px 75px rgba(0, 0, 0, 0.25),
+    10px 10px 70px rgba(0, 0, 0, 0.25),
+    inset 5px 5px 10px rgba(0, 0, 0, 0.5),
+    inset 5px 5px 20px rgba(225, 225, 225, 0.2),
+    inset -5px -5px 15px rgba(0, 0, 0, 0.5);
+}
+#secDots h2,
+#minDots h2,
+#hrDots h2
+{
+    color: var(--clr);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    font-weight: 600;
+    flex-direction: column;
+}
+#secDots h2 span,
+#minDots h2 span,
+#hrDots h2 span
+{
+    position: absolute;
+    bottom: 10px;
+    font-size: 0.4em;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+}
+#secDots b{
+    position: absolute;
+    color: #fff;
+    display: inline-block;
+    transform: translate(80px,40px);
+}
+#secDots.dot
+{
+    position: absolute;
+    width: 10px;
+    height: 3px;
+    transform-origin: 100px;
+}
+#clock:hover{
+    border: 5px solid aqua;
+    transition: 3s;
+}
