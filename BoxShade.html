@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Boxes with Interval</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    button {
+      width: 100px;
+      height: 35px;
+      background: linear-gradient(90deg,red, blue, yellow);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .box {
+      width: 70px;
+      height: 70px;
+      border: 2px solid black;
+      transition:0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <button id="reset">Reset</button>
+  </div>
+
+  <div id="head">
+    <!-- Create 60 boxes -->
+    <script>
+      for (let i = 0; i < 60; i++) {
+        document.write('<div class="box"></div>');
+      }
+    </script>
+  </div>
+
+  <script>
+    const boxes = document.querySelectorAll('.box');
+    const startBtn = document.getElementById('start');
+    const stopBtn = document.getElementById('stop');
+    const restartBtn = document.getElementById('reset');
+
+    let index = 0;
+    let intervalId = null;
+
+  //For the generation of ramdom colors
+
+    function randomHSL() {
+      return `hsl(${Math.floor(Math.random() * 360)}, 90%, 50%)`;
+    }
+
+    function startColoring() {
+      if (intervalId) return;
+
+      intervalId = setInterval(() => {
+        if (index < boxes.length) {
+          let c1 = randomHSL();
+          let c2 = randomHSL();
+          let c3 = randomHSL();
+          boxes[index].style.background = `linear-gradient(-90deg,${c1}, ${c2},${c3})`;
+          index=index+1;
+        } else {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+      }, 500);
+    }
+
+    function stopColoring() {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+
+    function reset() {
+      stopColoring();
+
+      boxes.forEach(box => box.style.background = "white");
+
+      index = 0;
+    }
+
+    startBtn.addEventListener("click", startColoring);
+    stopBtn.addEventListener("click", stopColoring);
+    restartBtn.addEventListener("click", reset);
+  </script>
+</body>
+</html>

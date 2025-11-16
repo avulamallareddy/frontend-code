@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Calculator</title>
+
+<style>
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #eaeaea;
+        font-family: Arial;
+    }
+
+    .calculator {
+        width: 300px;
+        height: 350px;
+        padding: 20px;
+        background: #222;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    }
+
+    .display {
+        width: 280px;
+        height: 60px;
+        font-size: 24px;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: right;
+        border: none;
+        color: #eaeaea;
+    }
+
+    .buttons {
+        margin-top: 15px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    button {
+        height: 45px;
+        background: #444;
+        color: white;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #3f3f3e;
+    }
+
+    .op { background: #ff9500; }
+    .equal { background: #28a745; }
+    .clear { background: #d9534f; }
+</style>
+
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" id="display" class="display" disabled>
+    <div class="buttons" id="buttons"></div>
+</div>
+
+<script>
+    const display = document.getElementById("display");
+    const buttonsContainer = document.getElementById("buttons");
+
+    // All calculator buttons
+    const keys = [
+        "7", "8", "9", "/",
+        "4", "5", "6", "*",
+        "1", "2", "3", "-",
+        "0", "00",".", "+", "%",
+        "C",'D','='
+    ];
+
+    // Create buttons dynamically
+    keys.forEach(key => {
+        const btn = document.createElement("button");
+        btn.textContent = key;
+
+        // Add classes
+        if (["/", "*", "-", "+"].includes(key)) btn.classList.add("op");
+        if (key === "=") btn.classList.add("equal");
+        if (["%",'D',"C"].includes(key)) btn.classList.add("clear");
+
+        // Add events
+        btn.onclick = () => handleClick(key);
+
+        buttonsContainer.appendChild(btn);
+    });
+
+    function handleClick(key) {
+        if (key === "C") {
+            display.value = "";
+        }
+        else if (key === "D") {   
+            display.value = display.value.slice(0, -1);
+        }
+        else if(key === '%'){
+            display.value = display.value /100;
+        }
+        else if (key === "=") {
+            try {
+                display.value = eval(display.value);
+            } catch {
+                display.value = "Error";
+            }
+        }
+        else {
+            display.value += key;
+        }
+    }
+</script>
+
+</body>
+</html>
