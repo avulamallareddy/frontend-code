@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Ticket Booking</title>
+
+<style>
+    body {
+        font-family: Arial;
+        background: #f1f1f1;
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+    }
+
+    .container {
+        background: white;
+        padding: 25px;
+        width: 350px;
+        box-shadow: 0 0 10px gray;
+        border-radius: 10px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    select  {
+        width: 350px;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 16px;
+    }
+    input{
+        width: 330px;
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 16px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: black;
+        color: white;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #333;
+    }
+
+    #result {
+        margin-top: 20px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 18px;
+    }
+    
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Movie Ticket Booking</h2>
+
+    <label>Select Movie:</label>
+    <select id="movieSelect">
+        <option value="1">Movie1</option>
+        <option value="2">Movie2</option>
+        <option value="3">Movie3</option>
+    </select>
+
+    <input type="number" id="ticketCount" placeholder="Enter No. of Tickets">
+
+    <button onclick="bookTickets()">Book Tickets</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function SingleTon(classObj) {
+    let instance;
+    return function() {
+        if (!instance) {
+            instance = new classObj();
+        }
+        return instance;
+    };
+}
+
+class Movie1 {
+    constructor() {
+        this.maxtic = 200;
+    }
+    booking(count) {
+        if (count > 0 && count <= this.maxtic) {
+            this.maxtic -= count;
+            return `Movie1: Tickets Booked Successfully<br>Remaining = ${this.maxtic}`;
+        } else {
+            return "Invalid Count";
+        }
+    }
+}
+
+class Movie2 {
+    constructor() {
+        this.maxtic = 150;
+    }
+    booking(count) {
+        if (count > 0 && count <= this.maxtic) {
+            this.maxtic -= count;
+            return `Movie2: Tickets Booked Successfully<br>Remaining = ${this.maxtic}`;
+        } else {
+            return "Invalid Count";
+        }
+    }
+}
+
+class Movie3 {
+    constructor() {
+        this.maxtic = 250;
+    }
+    booking(count) {
+        if (count > 0 && count <= this.maxtic) {
+            this.maxtic -= count;
+            return `Movie3: Tickets Booked Successfully<br>Remaining = ${this.maxtic}`;
+        } else {
+            return "Invalid Count";
+        }
+    }
+}
+
+const Movie1Single = SingleTon(Movie1);
+const Movie2Single = SingleTon(Movie2);
+const Movie3Single = SingleTon(Movie3);
+
+function bookTickets() {
+    const choice = document.getElementById("movieSelect").value;
+    const count = parseInt(document.getElementById("ticketCount").value);
+    const result = document.getElementById("result");
+
+    let movie;
+
+    if (choice == 1) movie = Movie1Single();
+    else if (choice == 2) movie = Movie2Single();
+    else if (choice == 3) movie = Movie3Single();
+
+    result.innerHTML = movie.booking(count);
+}
+</script>
+
+</body>
+</html>
